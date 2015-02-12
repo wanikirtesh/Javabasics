@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="Services Automation" default="test">
+
+    <target name="test">
+        <echo>Running the Test</echo>
+    </target>
+</project>
