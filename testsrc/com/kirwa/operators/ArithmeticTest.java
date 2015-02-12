@@ -1,4 +1,4 @@
-package com.kirwa.arrithmatic;
+package com.kirwa.operators;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
