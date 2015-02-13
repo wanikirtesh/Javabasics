@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Services Automation" default="test">
+<project name="Services Automation" default="report">
     <property file="build.properties"/>
     <property name="full-compile" value="true" />
     <path id="classpath.base"/>
@@ -54,4 +54,15 @@
             <formatter type="plain" usefile="false"/>
         </junit>
     </target>
+    <target name="report" depends="test">
+        <echo>Creating Report</echo>
+        <mkdir dir="${reports}/html" />
+        <junitreport todir="${reports}">
+            <fileset dir="${reports}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report todir="${reports}/html" />
+        </junitreport>
+    </target>
+
 </project>
