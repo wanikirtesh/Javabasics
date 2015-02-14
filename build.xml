@@ -46,7 +46,8 @@
     <target name="test" depends="compile">
         <junit showoutput="true">
             <classpath refid="classpath.junitTest" />
-            <batchtest>
+            <formatter type="xml" usefile="true"/>
+            <batchtest todir="${reports}">
                 <fileset dir="${source.test}">
                     <include name="**/*Test*" />
                 </fileset>
