@@ -7,7 +7,7 @@ package com.kirwa.operators.area;
  * *****************************
  */
 public class AreaCalculator {
-    public static double calculateArea(Area myArea) {
+    public static double calculateArea(com.kirwa.operators.area.Area myArea) {
         double calculatedArea=0;
         final double pi = 22f/7f;
         switch(myArea.getAreaType()){
@@ -25,4 +25,7 @@ public class AreaCalculator {
         }
         return calculatedArea;
     }
+
+
+
 }
