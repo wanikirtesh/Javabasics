@@ -23,4 +23,15 @@ public class PrintPatterns {
 
         return count;
     }
+
+    public static String diZipZap(String inputStr) {
+        int startIndex=0;
+        while(inputStr.indexOf("z",startIndex)>=0 && inputStr.indexOf("z",startIndex)<=inputStr.length()-2){
+            startIndex = inputStr.indexOf("z",startIndex)+1;
+            if(inputStr.charAt(startIndex+1)=='p'){
+                inputStr = inputStr.substring(0,startIndex)+inputStr.substring(startIndex+1);
+            }
+        }
+        return inputStr;
+    }
 }

@@ -21,5 +21,10 @@ public class PrintPatternsTest {
         Assert.assertEquals(4,PrintPatterns.findOccurrence(mainStr, "I"));
     }
 
+    @Test
+    public void testToPrintZipZapLogic(){
+        String inputStr="I have zzum jacket with zip and i ride zzppp on bike like zupz";
+        Assert.assertEquals("I have zzum jacket with zp and i ride zppp on bike like zpz",PrintPatterns.diZipZap(inputStr));
+    }
 
 }
