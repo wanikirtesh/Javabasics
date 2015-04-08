@@ -1,7 +1,7 @@
 package com.kirwa.strings;
 
 /**
- * Created by KIRTESH WANI on 2/28/15.
+ * Created by KIRTESH WANI on 2/28/15_Test.
  */
 public class PrintPatterns {
     public static String[] getCircularPatterns(String inputStr) {
