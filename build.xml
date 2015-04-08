@@ -20,6 +20,9 @@
         </delete>
         </then>
     </if-->
+    <mkdir dir="${build.production}"/>
+     <mkdir dir="${build.test}"/>
+    
     </target>
     <target name="compile" depends="clean">
         <javac srcdir="${source.production}" destdir="${build.production}"
