@@ -23,7 +23,7 @@ public class PrintPatternsTest {
 
     @Test
     public void testToPrintZipZapLogic(){
-        String inputStr="I have zzum jacket with zip and i ride zzppp on bike like zupz";
+        String inputStr="I have zzum jacket with zip and i ride zzppp on bike liike zupz";
         Assert.assertEquals("I have zzum jacket with zp and i ride zppp on bike like zpz",PrintPatterns.diZipZap(inputStr));
     }
 
