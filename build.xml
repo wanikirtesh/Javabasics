@@ -11,10 +11,15 @@
         <path refid="classpath.base" />
     </path>
     <target name="clean" >
+    <if>
+        <available file="${build}" type="dir" />
+        <then>
         <delete verbose="${full-compile}">
             <fileset dir="${build.production}" includes="**/*.class" />
             <fileset dir="${build.test}" includes="**/*.class" />
         </delete>
+        </then>
+    </if>
     </target>
     <target name="compile" depends="clean">
         <javac srcdir="${source.production}" destdir="${build.production}"
