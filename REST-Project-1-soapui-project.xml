@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="5bae5346-b56f-4f48-9ed3-f73d468744ac" activeEnvironment="Default" name="REST Project 1" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="4a955389-180e-4807-8950-28843835de83" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:9898" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://localhost:9898</con:endpoint></con:endpoints><con:resource name="Trend" path="/jmeter/trend" id="c6921a6e-94c0-4d1b-a696-7da36bc54bd1"><con:settings/><con:parameters><con:parameter><con:name>Threads</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Trend 1" id="7ef4e747-e62d-44cc-992c-f11133c55ed4" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>text/plain;charset=ISO-8859-1</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" id="226e3925-1620-47c5-b38f-5fd03b39e937" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9898</con:endpoint><con:request/><con:originalUri>http://localhost/jmeter/trend</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Threads" value="50" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>Threads</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:testSuite id="d5ca2f92-5b16-4a24-9123-51ee0b6e2db9" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="7736155d-e0be-45f7-9c4d-edbfce376b26" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="groovy" name="LoadAllTestDataFromFile" id="08d968f5-8dab-4754-b746-6636fc87c832"><con:settings/><con:config><script>context["rows"]=[]
+
+//Change this to the location of your CSV file.
+File testDataFile = new File("/temp/invoices.csv")
+testDataFile.eachLine {content, lineNumber -> 
+   context["rows"] &lt;&lt; content
+}
+
+//Initialise row counter
+context["currentRowIndex"]=0
+
+return "Loaded ${context["rows"].size()} rows."</script></con:config></con:testStep><con:testStep type="groovy" name="GetNextRowAndExractValues" id="32d63409-8fbc-42cd-983f-85d6c44038eb"><con:settings/><con:config><script>def currentRowIndex = context["currentRowIndex"]
+
+//Get values from csv row
+def rowItems = context["rows"][currentRowIndex].split(/,/)
+def invoiceId = rowItems[0]
+def invoiceCompany = rowItems[1]
+def invoiceAmount = rowItems[2]
+def invoiceDueDate = rowItems[3] 
+
+com.eviware.soapui.SoapUI.globalProperties.setPropertyValue( "invoiceAmount", invoiceAmount )
+//Increment counter
+context["currentRowIndex"] = currentRowIndex + 1
+
+return "Row #$currentRowIndex processed."</script></con:config></con:testStep><con:testStep type="restrequest" name="REST Request" id="7756e37a-5735-4967-86ea-45f88cace309"><con:settings/><con:config service="http://localhost:9898" resourcePath="/jmeter/trend" methodName="Trend 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="REST Request" id="226e3925-1620-47c5-b38f-5fd03b39e937" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9898</con:endpoint><con:request/><con:originalUri>http://localhost/jmeter/trend</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Threads" value="${invoiceAmount}" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>Threads</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="LoopIfMoreRows" id="1866cee6-e7da-4a91-a912-1944d161a96e"><con:settings/><con:config><script>def currentRowIndex = context["currentRowIndex"]
+
+if (currentRowIndex &lt; context["rows"].size) testRunner.gotoStepByName("GetNextRowAndExractValues")</script></con:config></con:testStep><con:properties><con:property><con:name>invoiceAmount</con:name><con:value>300</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
